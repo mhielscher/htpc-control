@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>HTPC - Main</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+<h1>Videos</h1>
+<div id="filesystem">
+</div>
+<iframe id="vlc-control-frame" src="http://htpc:8080" style="width: 100%; height: 250px;"></iframe>
+<script type="text/javascript">
+function expandDir(element, path) {
+    $.get("/vlc/listdir/"+path, {}, function (data) {
+        var newlist = element.append($("<ul></ul>")).children("ul");
+        console.log(newlist);
+        for (var i=0; i<data[0].length; i++) {
+            newlist.append($('<li><a class="dirlink" href="'+path+'/'+data[0][i]+'">'+data[0][i]+'/</a></li>\n'));
+        }
+        for (var i=0; i<data[1].length; i++) {
+            newlist.append($('<li><a class="vidlink" href="'+path+'/'+data[1][i]+'">'+data[1][i]+"</a></li>\n"));
+        }
+        console.log(newlist.children().children('a.dirlink'));
+        newlist.children().children('a.dirlink').click(function (event) {
+            event.preventDefault();
+            var filepath = $(this).attr('href');
+            expandDir($(this).parent(), filepath);
+        });
+        newlist.children().children('a.vidlink').click(function (event) {
+            event.preventDefault();
+            var filepath = $(this).attr('href');
+            $.post("/vlc/loadvideo/"+filepath, {}, function () {
+                var vlc = $('#vlc-control-frame');
+                vlc.detach();
+                $('body').append(vlc);
+            });
+        });
+    });
+}
+
+expandDir($('div#filesystem'), '.');
+</script>
+</body>
+</html>

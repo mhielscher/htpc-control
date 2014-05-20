@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>HTPC - Netflix</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+<h1>Netflix</h1>
+<p><a href="/netflix/hidemouse">Hide Mouse</a></p>
+<p><a href="/netflix/continueplaying">Continue Playing</a></p>
+<p><a href="/netflix/play">Play/Pause</a></p>
+<p><a href="/netflix/closetransition">Close (during transition)</a></p>
+<p><a href="/netflix/nexteptrans">Next Episode (during transition)</a></p>
+<script type="text/javascript">
+$('a').click(function (event) {
+    event.preventDefault();
+    //console.log(this);
+    $.post($(this).attr('href'));
+});
+</script>
+</body>
+</html>

@@ -1,15 +1,19 @@
 <html>
 <head>
-<title>Basic HTPC Controls</title>
+<title>HTPC - Main</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
-<h1>HTPC Controls</h1>
-<h2>Netflix</h2>
-<p><a href="/hidemouse">Hide Mouse</a></p>
-<p><a href="/continueplaying">Continue Playing</a></p>
-<p><a href="/play">Play/Pause</a></p>
-<p><a href="/closetransition">Close (during transition)</a></p>
-<h2>VLC</h2>
-<p><a href="//htpc:8080" onclick="javascript:window.open('//'+window.location.hostname+':8080'); return false">Go to VLC controls</a></p>
+<p><a href="/vnc">Start VNC</a></p>
+<p><a href="/netflix">Netflix Controls</a></p>
+<p><a href="/vlc">VLC controls</a></p>
+<p><a href="/shutdown">Shut Down</a></p>
+<script type="text/javascript">
+$('a[href="/shutdown"]').click(function (event) {
+    event.preventDefault();
+    //console.log(this);
+    $.post($(this).attr('href'));
+});
+</script>
 </body>
 </html>
